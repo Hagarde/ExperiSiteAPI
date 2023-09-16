@@ -16,7 +16,6 @@ export const initialisationJeu = async (req, res) => {
             t : 0
         });
 
-
         const frame = {
             experience: experience._id,
             t:0,

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import EpidemieModel from '../model/epidemie.js';
+import ExperienceModel from '../model/experience.js';
 
 const secret = 'test';
 
@@ -91,3 +92,28 @@ export const get10Epidemie = async (req, res) => {
       res.status(500).json({ error: 'Erreur lors de la récupération des éléments.' });
     }
   };
+
+export const getEpidemie = async (req,res) => {  
+  try {
+    const experienceId = req.params.experienceId;
+
+    if (!mongoose.Types.ObjectId.isValid(experienceId)) {
+      return res.status(400).json({ message: 'ID d\'expérience non valide' });
+    }
+
+    // Remplacez le champ `fieldToPopulate` par le nom du champ qui pointe vers l'épidémie dans votre modèle d'expérience
+    const epidemie = (await ExperienceModel.findById(experienceId).populate('epidemie')).epidemie;
+
+
+    if (!epidemie) {
+      return res.status(404).json({ message: 'Épidémie non trouvée' });
+    }
+
+    res.json(epidemie);
+} catch (err) {
+  console.error(err);
+  res.status(500).json({ message: 'Erreur serveur' });
+}
+};
+
+

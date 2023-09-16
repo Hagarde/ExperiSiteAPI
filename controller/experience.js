@@ -1,9 +1,8 @@
-import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import experienceModel from '../model/experience.js';
 import epidemieModel from '../model/epidemie.js';
+import frameModel from '../model/frame.js';
 
-const secret = 'test';
 
 export const create = async ( req, res) => {
     try {
@@ -90,3 +89,14 @@ export const incrementTOfEpidemie = async (req, res) => {
     return res.status(500).json({ message: 'Une erreur est survenue lors de la mise à jour de l\'élément.' });
   }
 };
+
+export const getFramesFromExperience = async (req,res) => {
+  try {
+    const experienceId = req.params.experienceId;
+    // Recherchez toutes les frames associées à l'expérience donnée
+    const frames = await frameModel.find({ experience: experienceId });
+    res.json(frames);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des éléments.' });
+  }
+}
