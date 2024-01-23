@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
+
 import cors from "cors";
 import morgan from "morgan";
-
 import EpidemieRouter from './route/epidemie.js';
 import ExperienceRouter from './route/experience.js';
 import FrameRouter from './route/frame.js';
@@ -18,7 +18,6 @@ app.use(express.json({limit: "30mb", extended: "true"}))
 app.use(express.urlencoded({limit: "30mb", extended: "true"}))
 app.use(cors())
 
-const MONGODB_URL = "mongodb+srv://root:root@cluster0.leuql.mongodb.net/?retryWrites=true&w=majority"
 
 // Création des route des API 
 app.use("/epidemie", EpidemieRouter);
@@ -30,8 +29,10 @@ app.get("/", (req, res)=>{
     res.send("Ca marche");
 })
 
+const MONGODB_URL = 'mongodb+srv://root:root@cluster0.leuql.mongodb.net/?retryWrites=true&w=majority' ;
+
 mongoose
-    .connect(MONGODB_URL)
+    .connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(()=>{
         app.listen(port, () => {
             console.log(`Bien connecté, serveur dispo au port ${port}`)

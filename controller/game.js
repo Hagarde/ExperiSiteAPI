@@ -2,7 +2,7 @@ import frameModel from '../model/frame.js';
 import epidemieModel from '../model/epidemie.js';
 import experienceModel from '../model/experience.js';
 import {population, I0} from '../parameter.js';
-import nextDay from '../calcul.js/calcul.js';
+import nextDay from '../calcul/calcul.js';
 
 export const initialisationJeu = async (req, res) => {
     try {
