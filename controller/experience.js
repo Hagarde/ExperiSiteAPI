@@ -95,8 +95,12 @@ export const getFramesFromExperience = async (req,res) => {
     const experienceId = req.params.experienceId;
     // Recherchez toutes les frames associées à l'expérience donnée
     const frames = await frameModel.find({ experience: experienceId });
-    res.json(frames);
+    const experienceData = await experienceModel.findById(experienceId);
+    const epidemieData = await epidemieModel.findById({ _id : experienceData.epidemie});
+
+    res.json({frames : frames, experience : experienceData, epidemie: epidemieData});
   } catch (error) {
+    console.log (error);
     res.status(500).json({ error: 'Erreur lors de la récupération des éléments.' });
   }
 }

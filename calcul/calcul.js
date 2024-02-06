@@ -81,7 +81,7 @@ function calculateRegion(S, U, P, RU, nmbr_test, beta_soi, inf_inter_regionale, 
     const nmbr_test_reel = Math.pow(nmbr_test*epsilon*population, alpha) * pas // On s'intéresse au nombre réel de test pq alpha traduit que plus on fait de test plus c'est probable de tombé sur les bon, effet connaissance 
     const infection = beta_soi * S * (U + (1 - pi) * P);
     const prblUP = (Math.pow(U / (U + S + RU), psi)); // C'ets la probabilité que le test soit effectué sur une personne positive ==> psi permet d'augmenter cette prbl car on ne teste pas au hasard 
-    const teste_positif = nmbr_test_reel * prblUP;
+    const teste_positif = nmbr_test_reel * prblUP < nmbr_test*epsilon*population ? nmbr_test_reel * prblUP : nmbr_test*epsilon*population; // condition si npombre de positif > nombre de test 
 
     const dS_ = - infection - inf_inter_regionale;
     const dU_ = infection - dRU_ - teste_positif + inf_inter_regionale;
