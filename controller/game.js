@@ -69,7 +69,9 @@ export const play = async (req, res) => {
             YA: req.body.frame.YA, 
             YB: req.body.frame.YB};
         
-        return res.status(200).send({ ... newData});
+        // condition d'arrêt avec undetected inférieur au nombre d'infecté au départ
+        const conditionArret = (req.body.frame.U1 < I0 && req.body.frame.U2 < I0 && req.body.frame.U3 < I0 && req.body.frame.U4 < I0 );
+        return res.status(200).send({ ... newData, conditionArret: conditionArret});
 
         } catch (error) {
         console.error('Erreur lors de la mise à jour de l\'élément :', error);
